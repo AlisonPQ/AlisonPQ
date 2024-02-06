@@ -1,0 +1,6 @@
+baseURL = 'https://example.org/'
+languageCode = 'en-us'
+title = 'Alison Blog'
+theme = 'beautifulhugo'
+pygmentsCodeFences = true
+pygmentsUseClasses = true
