@@ -1,7 +1,7 @@
 ---
 title: 'JavaScript Objects Notes'
 date: 2024-08-27T19:27:06-04:00
-draft: true
+draft: false
 ---
 
 ## Understanding Objects in JavaScript
