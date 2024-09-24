@@ -1,7 +1,7 @@
 ---
 title: 'Asynchronous Deep Dive - JavaScript'
 date: 2024-09-23T22:13:24-04:00
-draft: true
+draft: false
 ---
 
 1. [Understanding Asynchronous Coding](#understanding-asynchronous-coding)
