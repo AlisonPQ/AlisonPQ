@@ -4,6 +4,12 @@ date: 2024-09-23T22:13:24-04:00
 draft: true
 ---
 
+1. [Understanding Asynchronous Coding](#understanding-asynchronous-coding)
+2. [The Necessity of Callbacks](#the-necessity-of-callbacks)
+3. [Promises](#promises)
+4. [Async Await](#async-await)
+5. [Making Use of Generators](#making-use-of-generators)
+
 ## Understanding Asynchronous Coding
 
 ### Synchronous VS Asynchronous
