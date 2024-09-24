@@ -282,3 +282,265 @@ Promise.allSettled(promises).
 
 `Promise.any()` takes an iterable of `Promise` objects.
 It returns a single promise that resolves as soon as any of the promises in the iterable fulfills, with the value of the fulfilled promise. If no promises in the iterable fulfill (if all of the given promises are rejected), then the returned promise is rejected with an `AggregateError`, a new subclass of `Error` that groups together individual errors.
+
+## Async Await
+
+### Introduccion to Async Await
+
+Async Await keywords appeared in the JavaScript world after promises, in fact using Async Await requires that you understand and know how to work with promises.
+
+The main purpose of async await is to simplify our promise code.
+
+Promises help simplify all the nesting that happens with `callbacks` and `async/await` are going to simplify Promises.
+
+Basically async functions enable us to write promise based code as if it were synchronous but without blocking the execution thread.
+
+So the code will look like a regular synchronous code but it will include the asynchronous functionality and making the code look synchronous it is much easier to reason about, basically async await extend promises and make them more powerful, now since async await extend promises.
+
+> Does that mean we should just always use `async await` and never use promises? No, it does not. The synchronous portion os `async await` can sometimes have a tradeoff. So there are times yopu will want to use `Promises`. There are times you'll want to use `async await`.
+
+**IMPORTANT:**
+
+#### `async` keyword
+
+Async is used with a function when `async` is used as a part of a function definition it forces the function to return a `Promise`.
+
+- If the function is already retuning a value that value is wrapped in a promise.
+- If no value is being returned it still causes the function to return a promise.
+
+``` JavaScript
+"use strict"
+const plainFunction = async function() {
+    console.log('start');
+    return 'done';
+}
+
+var result = plainFunction();
+```
+
+#### `await` keyword
+
+Use await keyword when you want to pause and wait for a promise to resolve.
+
+- It can only be used inside an async function.
+- It waits for a Promise.
+- It causes the async function to pause.
+
+``` JavaScript
+"use strict"
+
+const asyncFunction = async function() {
+    let response = await anotherAsyncFunction();
+    console.log(response);
+}
+
+asyncFunction();
+```
+
+#### Mapping a JavaScript Array
+
+If you need to manipulate the values of an array, use map. Don't modify the existing array.
+
+> `map` creates a new array from an array
+
+``` JavaScript
+"use strinct"
+
+let nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+let product = function(val) {
+    return val * val; // return val ** 2;
+};
+
+let square = nums.map(product);
+let quad = nums.map(product).map(product);
+```
+
+Objects in array
+
+``` JavaScript
+let nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+let objs = nums.map(function(val, index, arr) {
+    return {
+        index: index,
+        val: val,
+        square: val ** 2,
+        cube: val ** 3,
+        origArray: arr
+    };
+});
+```
+
+#### Using Async Await
+
+``` JavaScript
+"use strict";
+
+const swapiFilms = async function() {
+    let url = "https://swapi.co/api/films",
+        filmsData = {},
+        films = [];
+    
+    filmsData = await fetch(url).then(data => data.json());
+
+    // Processing data
+    films = filmsData.results.map(obj => obj.title);
+
+    console.log(films);
+};
+
+swapiFilms();
+```
+
+#### Filtering a JS Array
+
+If you need to filter values in an array, you should be using the filter method, not a loop.
+
+> Filter returns an array
+
+``` JavaScript
+let scores = [87, 65, 90, 100, 55, 0, 92, 43, 85];
+
+let passScores = scores.filter(function(val) {
+    return val > 60;
+});
+
+// With arrow functions
+let passScores = scores.filter(val => val > 60);
+```
+
+#### `try catch` and `for of`
+
+Consider:
+
+``` JavaScript
+"use strict"
+const moviePlanets = async function(movieNum) {
+    let url = 'https://swapi.co/api/films/';
+
+    try {
+        if (isNaN(movieNum)) {
+            throw "You must pass in number"
+        }
+        let movieOBJ = await $.getJSON(url + movieNum + '/');
+        console.log(movieObj.title);
+    
+        let promises = movieObj.planets.map(url => $.getJSON(url));
+    
+        for await (let pl of promises ) {
+            console.log(pl.name);
+        }
+    } catch(e) {
+        console.error(e);
+    }
+};
+
+moviePlanets(3);
+```
+
+IIFEs example:
+
+``` JavaScript
+
+"use strict"
+
+(async function() {
+    let data = await fetch('https://jsonplaceholder.typicode.com/todos');
+    let obj = await data.json();
+
+    console.log(obj);
+})(); // Applying IIFEs
+
+/*fetch('https://jsonplaceholder.typicode.com/todos')
+.then(data => data.json())
+.then(obj => console.log(obj));
+*/
+console.log('Other code');
+```
+
+#### Using Promise.all with async await
+
+``` JavaScript
+"use strict";
+
+let firstName = function() {
+    return new Promise(function(resolve, reject) {
+        setTimeout(function() {
+            resolve("Bobby");
+        }, 1000);
+    });
+};
+
+let lastName = function() {
+    return new Promise(function(resolve, reject) {
+        setTimeout(function() {
+            resolve("Hancock");
+        }, 3000);
+    });
+};
+
+let middleName = function() {
+    return new Promise(function(resolve, reject) {
+        setTimeout(function() {
+            resolve("W.");
+        }, 4000);
+    });
+};
+
+(async function() {
+    let names = await Promise.all([firstName(), lastName(), middleName()]);
+    console.log(names[0] + " " + names[1] + " " = names[2]);
+})();
+```
+
+#### Careful Coding with async await
+
+- Async Await is new does not mean you should rewrite everything in async await you need
+- You need to make decicions based upon what you know.
+- The big advantage about async await is that it is easier to reason about.
+- Async await takes asynchronous code and makes it synchronous which is easier to reason about (it is not necessarily more performance).
+- In fact it is possible to write async functions that are not performing at all (you need to write these carefully).
+- *Remember* the await keyboard causes the engine to wait, so *waiting* is not performance.
+- Make sure your waiting is not blocking code that could be running asynchronously.
+- A good rule of thumb is to keep ypur async functions small do smaller tasks.
+- Do not create a huge async function or you may end up blocking some code, you do not intend to block.
+
+> Async Await is simple a pattern allows us to manage and work with asynchronous code, it does not make the code asynchronous.
+>
+>As we know in async function return a promise so we can use `.then(...)` method.
+
+#### Using async on Object Methods
+
+``` JavaScript
+"use strict";
+
+var userObj = {
+    firstName: 'Bobby',
+    lastName: 'Hancock',
+    async printFullName() {
+        let punct = await asyncFunction(1000);
+        console.log(`${this.firstName} ${this.lastname} ${punct}`);
+    }
+};
+
+userObj.printFullName();
+
+// Bobby Hancock!
+```
+
+``` JavaScript
+class Greetings {
+    constructor(greet) {
+        this.greet = greet;
+    }
+    async greeting(name) {
+        let punct = await asyncFunction(2000);
+        console.log(`${this.greet} ${name}${punct}`);
+    }
+};
+
+var mornGreet = new Greetings("Good Morning");
+mornGreet.greeting('Bobby');
+
+//Good Morning Bobby!
+```
