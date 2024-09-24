@@ -53,3 +53,41 @@ Notes:
 
 - **Call stack:** asynchronous code
 - **Callback queue:** for a callback queue function to execute there must be no instruction executing on the call stack or a function being executed ahead of the callback queue
+
+## The Necessity of Callbacks
+
+> "I will call back later!"
+
+- A callback is a function passed as an argument to another function
+- This technique allows a function to call another function
+- A callback function can run after another function has finished
+
+> Where callbacks really shine are in asynchronous functions, where one function has to wait for another function (like waiting for a file to load).
+
+### Asynchronous Coding and Callbacks
+
+When you are using callbaks, avoid to use `()` to invoke the callback function.
+
+``` JavaScript
+let determineTotal = function() {
+    let total = 0,
+        count = 0;
+
+    processStudents(students, function(obj) {
+        total = total + obj.score;
+        count++;
+    });
+
+    console.log("Total Score: " + total + " - Total Count: " + count);
+}
+
+setTimeout(determineTotal, 0);
+```
+
+Where: `setTimeout(determineTotal, 0);`
+
+### Problems with JavaScript Callbacks
+
+- **Callback** hell, it is related to a bunch of nested callbacks becomes very difficult to work with callbacks.
+- **Difficult to reason about**, if you have a lot of callbacks, that's what makes it difficult to reason about.
+- **Inversion of control**, you cannot have callbacks is you turn control of your program over to something for example, if you are using asynchronous coding to connect with a server and get data wich you would need to do that control is turned over to something on the server or you may be using an API call that uses asynchronous coding that uses callbacks and you don't have control of that code.
