@@ -544,3 +544,131 @@ mornGreet.greeting('Bobby');
 
 //Good Morning Bobby!
 ```
+
+## Making Use of Generators
+
+- Basically a generator is a way to writee code that you can pause and then continue at a later time.
+- A generator is a function that we can use to cause the code to yield and the code won't continue until we tell it to at some later time.
+- When you yield or pause the code it doesn't  hold up code that may be elsewhere, it simply pauses at the yield line in the generator function as you will see in this section.
+- Perhaps a more technical way to describe it is you start a generator function and then you can exit that function before it runs all the code.
+- Later you can reenter that function at the point where you exited it is even possible that you do not want to continue the function at all and so it may not ever finish.
+
+### Understanding and Using Generators
+
+- You must define a function as a generator function and this requires the use of the asterisk character.
+- The second part requires the yield keyword you place yield statements inside the generator
+
+Example:
+
+``` JavaScript
+// Just a function
+"use strict";
+
+function genTest() {
+    let x = 0;
+    console.log('start');
+    x++;
+    console.log(x);
+    x++;
+    console.log(x);
+    x++;
+    console.log('end');
+    return x;
+}
+
+let gen = genTest();
+```
+
+Converting the previous function to a generator function:
+
+``` JavaScript
+// Adding '*' to convert into a  generator function
+"use strict";
+
+function *genTest() {
+    let x = 0;
+    console.log('start');
+    yield x++;
+    console.log(x);
+    x++;
+    yield;
+    console.log(x);
+    x++;
+    console.log('end');
+    return x;
+}
+
+let gen = genTest();
+```
+
+Using `yield` keyword, you need to use `<name_variable>.next()` on console, where `<name_valiable>` has the function assigned.
+
+> Can you declare an arrow function as a generator and as of right now you cannot do that.
+
+### Fibonacci example
+
+``` JavaScript
+"use strict";
+
+const fibonacci = function *(len, nums = [0, 1]) {
+    let num1 = nums[0],
+        num2 = nums[1],
+        next,
+        cnt = 2;
+    while (cnt < len) {
+        next = num1 + num2;
+        num1 = num2;
+        num2 = next;
+        nums.push(next);
+        cnt++;
+        yield nums;
+    }
+    return nums;
+}
+
+var fib = fibonacci(20);
+```
+
+### Using a Generator to Create an "Iterator"
+
+``` JavaScript
+"use strict";
+
+let arr = ['a', 'b', 'c', 'd', 'e'];
+//let it = arr[Symbol.iterator]();
+
+const arrIt = function *(arr) {
+    for (let i = 0; i , arr.length; i++) {
+        yield arr[i];
+    }
+};
+
+let it = arrIt(arr);
+console.log("Remaining code.");
+```
+
+On console: `it.next()`
+
+### Two-way communication with generators
+
+``` JavaScript
+"use strict";
+
+function *yieldConsole() {
+    let val = yield;
+    console.log(val);
+};
+
+let it = yieldConsole();
+let prompt = it.next().value;
+console.log(prompt);
+```
+
+On Console:
+
+``` Shell
+Enter a value
+> it.next(500);
+500
+>> {value: undefined, done: true}
+```
