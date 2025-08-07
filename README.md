@@ -11,7 +11,7 @@ Full Stack Software Engineer with approximately 5 years of commercial software d
 * 🚀  I'm currently working on [My Blog](http://alisonpq.github.io/blog/)
 * 🧠  I'm learning about DevOps and IA
 * 🤝  I'm open to collaborating on Projects
-* ⚡  Hello World! I'm secretly Princess Shuri...but don't tell anyone.
+* ⚡  Hello World! I'm secretly Batgirl hahaha...but don't tell anyone.
 
 ### Skills
 
